@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../reducers';
-import { fetchTodos } from '../actions';
+import { fetchTodos, deleteTodo } from '../actions';
 import { Todo } from '../actions';
 
 export const App = (): JSX.Element => {
@@ -11,9 +11,17 @@ export const App = (): JSX.Element => {
     dispatch(fetchTodos());
   };
 
+  const deleteTodoHandler = (id: number): void => {
+    dispatch(deleteTodo(id));
+  };
+
   const renderList = (): JSX.Element[] => {
     return todos.map((todo: Todo) => {
-      return <li key={todo.id}>{todo.title}</li>;
+      return (
+        <li onClick={deleteTodoHandler.bind(null, todo.id)} key={todo.id}>
+          {todo.title}
+        </li>
+      );
     });
   };
 
