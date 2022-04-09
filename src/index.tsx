@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-const App: React.FC<{ color?: string }> = ({ color }) => {
+const App: React.FC<{ color?: string }> = ({ color }): JSX.Element => {
   const [counter, setCounter] = useState<number>(0);
 
   const onIncrement = (): void => {
