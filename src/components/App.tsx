@@ -2,12 +2,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from '../reducers';
 import { fetchTodos, deleteTodo } from '../actions';
 import { Todo } from '../actions';
+import { useEffect, useState } from 'react';
 
 export const App = (): JSX.Element => {
   const todos = useSelector((state: StoreState) => state.todos);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect((): void => {
+    if (todos.length) {
+      setIsLoading(false);
+    }
+  }, [todos]);
 
   const onButtonClick = (): void => {
+    setIsLoading(true);
     dispatch(fetchTodos());
   };
 
@@ -28,7 +37,7 @@ export const App = (): JSX.Element => {
   return (
     <div>
       <button onClick={onButtonClick}>Fetch</button>
-      {renderList()}
+      {isLoading ? <div>Loading...</div> : <ul>{renderList()}</ul>}
     </div>
   );
 };
